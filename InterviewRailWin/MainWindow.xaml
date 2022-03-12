@@ -1,0 +1,21 @@
+﻿<reactiveUi:ReactiveWindow x:Class="InterviewRailWin.MainWindow"
+                           xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                           xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                           xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                           xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                           xmlns:local="clr-namespace:UI"
+                           xmlns:reactiveUi="http://reactiveui.net"
+                           x:TypeArguments="local:MainViewModel"
+                           mc:Ignorable="d"
+                           d:DataContext="{d:DesignInstance Type=local:MainViewModel, IsDesignTimeCreatable=False}" 
+                           Title="MainWindow" Height="450" Width="800">
+    <Grid>
+        <DataGrid x:Name="StationDataGrid" 
+                  AutoGenerateColumns="False">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Station" Binding="{Binding StationDesc}" />
+                <DataGridTextColumn Header="Station code" Binding="{Binding StationCode}" />
+            </DataGrid.Columns>
+        </DataGrid>
+    </Grid>
+</reactiveUi:ReactiveWindow>
