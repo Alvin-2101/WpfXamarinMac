@@ -11,11 +11,16 @@ namespace UI
     {
         private static string ApiRoot = @"http://api.irishrail.ie/realtime/realtime.asmx/";
         
-        public static async IList<StationModel> GetAllStationsAsync()
+        public async Task<IList<StationModel>> GetAllStationsAsync()
         {
             return (await ApiRoot
                 .AppendPathSegment("getAllStationsXML")
                 .GetXmlAsync<ArrayOfStationModel>()).ObjStation;
+        }
+
+        IList<StationData> IRailService.GetStationDetailsAsync()
+        {
+            throw new System.NotImplementedException();
         }
     }
 
@@ -54,6 +59,11 @@ namespace UI
             public string Xsd { get; set; }
             [XmlAttribute(AttributeName="xmlns")]
             public string Xmlns { get; set; }
+        }
+
+        public class StationData
+        {
+
         }
     }
 

@@ -13,24 +13,28 @@ namespace UI
     {
         private readonly ReadOnlyObservableCollection<StationModel> _stations;
         private readonly SourceList<StationModel> _consentSourceList;
-
+        IRailService _railService;
         public MainViewModel()
         {
             _consentSourceList = new SourceList<StationModel>();
             _consentSourceList.Connect()
                 .Bind(out _stations)
                 .Subscribe();
+            _railService = new RailService();
         }
         
         public ReadOnlyObservableCollection<StationModel> Stations => _stations;
 
         protected override void HandleActivation(CompositeDisposable disposable)
         {
-            Observable.FromAsync(RailService.GetAllStationsAsync)
+            Observable.FromAsync(_railService.GetAllStationsAsync)
                 .Take(1)
                 .Subscribe(stations =>
                 {
-                    _consentSourceList.AddRange(stations);
+                    AppDelegate.Self.InvokeOnMainThread(() =>
+                    {
+                        _consentSourceList.AddRange(stations);
+                    });
                 });
         }
 

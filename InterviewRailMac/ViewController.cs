@@ -4,10 +4,11 @@ using System;
 
 using Foundation;
 using AppKit;
+using UI.Utils;
 
 namespace UI
 {
-	public partial class ViewController : NSViewController
+	public partial class ViewController : ViewControllerBase<ViewModel>
 	{
 		public ViewController(IntPtr handle) : base(handle)
 		{
