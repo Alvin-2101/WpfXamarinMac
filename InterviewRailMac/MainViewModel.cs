@@ -29,12 +29,10 @@ namespace UI
         {
             Observable.FromAsync(_railService.GetAllStationsAsync)
                 .Take(1)
+                .ObserveOn(RxApp.MainThreadScheduler)
                 .Subscribe(stations =>
                 {
-                    AppDelegate.Self.InvokeOnMainThread(() =>
-                    {
-                        _consentSourceList.AddRange(stations);
-                    });
+                   _consentSourceList.AddRange(stations);
                 });
         }
 
