@@ -10,6 +10,7 @@ using System.Reactive.Linq;
 using UI.Model;
 using System.Collections.ObjectModel;
 using DynamicData.Binding;
+using System.Reactive.Disposables;
 
 namespace UI
 {
@@ -35,59 +36,59 @@ namespace UI
             NSTableCellView cellView;
             switch (tableColumn.Identifier)
             {
-                case "StationNameColumn":
-                    cell = StationNameCell;
-                    text = _stations[(int)row].StationDesc;
-                    var makeViewName = (NSTableCellView)tableView.MakeView(cell, this);
-                    makeViewName.TextField.StringValue = text;
-                    cellView = makeViewName;
-                    break;
-                case "NextTrainColumn":
-                    cell = StationCodeCell;
-                    text = _stations[(int)row].StationCode;
-                    var makeViewCode = (NSTableCellView)tableView.MakeView(cell, this);
-                    makeViewCode.TextField.StringValue = text;
-                    cellView = makeViewCode;
-                    break;
-                case "FavoriteColumn":
-                    var view = new NSTableCellView();
+                //case "StationNameColumn":
+                //    cell = StationNameCell;
+                //    text = _stations[(int)row].StationDesc;
+                //    var makeViewName = (NSTableCellView)tableView.MakeView(cell, this);
+                //    makeViewName.TextField.StringValue = text;
+                //    cellView = makeViewName;
+                //    break;
+                //case "NextTrainColumn":
+                //    cell = StationCodeCell;
+                //    text = _stations[(int)row].StationCode;
+                //    var makeViewCode = (NSTableCellView)tableView.MakeView(cell, this);
+                //    makeViewCode.TextField.StringValue = text;
+                //    cellView = makeViewCode;
+                //    break;
+                //case "FavoriteColumn":
+                //    var view = new NSTableCellView();
 
-                    // Configure the view
-                    view.Identifier = tableColumn.Title;
+                //    // Configure the view
+                //    view.Identifier = tableColumn.Title;
 
-                    var checkbox = new NSButton(new CGRect(0, 0, 20, 20));
-                    checkbox.SetButtonType(NSButtonType.Switch);
-                    checkbox.Title = string.Empty;
-                    checkbox.Tag = row;
-                    var favArray = NSUserDefaults.StandardUserDefaults.StringArrayForKey("favoriteList");
-                    if (favArray != null)
-                        checkbox.State = favArray.Contains(_stations[(int)row].StationCode) ? NSCellStateValue.On : NSCellStateValue.Off;
-                    else
-                        checkbox.State = NSCellStateValue.Off;
+                //    var checkbox = new NSButton(new CGRect(0, 0, 20, 20));
+                //    checkbox.SetButtonType(NSButtonType.Switch);
+                //    checkbox.Title = string.Empty;
+                //    checkbox.Tag = row;
+                //    var favArray = NSUserDefaults.StandardUserDefaults.StringArrayForKey("favoriteList");
+                //    if (favArray != null)
+                //        checkbox.State = favArray.Contains(_stations[(int)row].StationCode) ? NSCellStateValue.On : NSCellStateValue.Off;
+                //    else
+                //        checkbox.State = NSCellStateValue.Off;
 
-                    // Wireup events
-                    checkbox.Activated += (sender, e) =>
-                    {
-                        // Get button and product
-                        var btn = sender as NSButton;
+                //    // Wireup events
+                //    checkbox.Activated += (sender, e) =>
+                //    {
+                //        // Get button and product
+                //        var btn = sender as NSButton;
 
-                        var defaults = NSUserDefaults.StandardUserDefaults;
-                        var favoriteArray = defaults.StringArrayForKey("favoriteList");
-                        favoriteList = new List<string>();
-                        if (favoriteArray != null)
-                            favoriteList = favoriteArray.ToList();
+                //        var defaults = NSUserDefaults.StandardUserDefaults;
+                //        var favoriteArray = defaults.StringArrayForKey("favoriteList");
+                //        favoriteList = new List<string>();
+                //        if (favoriteArray != null)
+                //            favoriteList = favoriteArray.ToList();
 
-                        if (btn.State == NSCellStateValue.On)
-                            favoriteList.Add(_stations[(int)row].StationCode);
-                        else
-                            favoriteList.Remove(_stations[(int)row].StationCode);
+                //        if (btn.State == NSCellStateValue.On)
+                //            favoriteList.Add(_stations[(int)row].StationCode);
+                //        else
+                //            favoriteList.Remove(_stations[(int)row].StationCode);
 
-                        defaults.SetValueForKey(NSArray.FromStrings(favoriteList.ToArray()), new NSString("favoriteList"));
-                        defaults.Synchronize();
-                    };
-                    view.AddSubview(checkbox);
-                    cellView = view;
-                    break;
+                //        defaults.SetValueForKey(NSArray.FromStrings(favoriteList.ToArray()), new NSString("favoriteList"));
+                //        defaults.Synchronize();
+                //    };
+                //    view.AddSubview(checkbox);
+                //    cellView = view;
+                //    break;
                 default:
                     cellView = null;
                     break;
@@ -119,7 +120,7 @@ namespace UI
 
         private void PopulateFromViewModel(ViewModel viewModel)
         {
-            _stationTableView.Source = new StationTableViewDataSource(viewModel.Stations, _stationTableView);
+            //_favoriteOutlineView.Source = new StationTableViewDataSource(viewModel.Stations, _stationTableView);
         }
     }
 }
