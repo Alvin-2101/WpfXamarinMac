@@ -27,18 +27,29 @@ namespace UI
 
         protected override void HandleActivation(CompositeDisposable disposable)
         {
-            Observable.FromAsync(_railService.GetAllStationsAsync)
-                .Take(1)
-                .ObserveOn(RxApp.MainThreadScheduler)
-                .Subscribe(stations =>
+            GetAllStation();
+
+            Observable.Interval(TimeSpan.FromMinutes(4))
+                .Subscribe(interval =>
                 {
-                   _consentSourceList.AddRange(stations);
+                    GetAllStation();
                 });
         }
 
         protected override void HandleDeactivation()
         {
             // NA
+        }
+
+        private void GetAllStation()
+        {
+            Observable.FromAsync(_railService.GetAllStationsAsync)
+                        .Take(1)
+                        .ObserveOn(RxApp.MainThreadScheduler)
+                        .Subscribe(stations =>
+                        {
+                            _consentSourceList.AddRange(stations);
+                        });
         }
     }
 }
