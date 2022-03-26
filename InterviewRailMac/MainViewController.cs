@@ -9,6 +9,8 @@ using ReactiveUI;
 using UI.Model;
 using UI.Utils;
 using Foundation;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace UI
 {
@@ -16,7 +18,7 @@ namespace UI
     {
         private const string StationNameCell = @"StationNameCell";
         private const string StationCodeCell = @"StationCodeCell";
-
+        private List<string> favoriteList;
         private readonly ReadOnlyObservableCollection<StationModel> _stations;
 
         public StationTableViewDataSource(ReadOnlyObservableCollection<StationModel> stations, NSTableView tableView)
@@ -58,18 +60,31 @@ namespace UI
                     checkbox.SetButtonType(NSButtonType.Switch);
                     checkbox.Title = string.Empty;
                     checkbox.Tag = row;
-                    checkbox.State = NSUserDefaults.StandardUserDefaults.BoolForKey(_stations[(int)row].StationCode) ? NSCellStateValue.On : NSCellStateValue.Off;
+                    var favArray = NSUserDefaults.StandardUserDefaults.StringArrayForKey("favoriteList");
+                    if (favArray != null)
+                        checkbox.State = favArray.Contains(_stations[(int)row].StationCode) ? NSCellStateValue.On : NSCellStateValue.Off;
+                    else
+                        checkbox.State = NSCellStateValue.Off;
 
                     // Wireup events
                     checkbox.Activated += (sender, e) =>
                     {
                         // Get button and product
                         var btn = sender as NSButton;
+                        
+                        var defaults = NSUserDefaults.StandardUserDefaults;
+                        var favoriteArray = defaults.StringArrayForKey("favoriteList");
+                        favoriteList = new List<string>();
+                        if (favoriteArray != null)
+                            favoriteList = favoriteArray.ToList();
 
                         if (btn.State == NSCellStateValue.On)
-                            NSUserDefaults.StandardUserDefaults.SetBool(true, _stations[(int)row].StationCode);
+                            favoriteList.Add(_stations[(int)row].StationCode);
                         else
-                            NSUserDefaults.StandardUserDefaults.SetBool(false, _stations[(int)row].StationCode);
+                            favoriteList.Remove(_stations[(int)row].StationCode);
+
+                        defaults.SetValueForKey(NSArray.FromStrings(favoriteList.ToArray()), new NSString("favoriteList"));
+                        defaults.Synchronize();
                     };
                     view.AddSubview(checkbox);
                     cellView = view;

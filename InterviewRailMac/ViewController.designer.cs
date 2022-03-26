@@ -1,8 +1,7 @@
-﻿// WARNING
+// WARNING
 //
-// This file has been generated automatically by Rider IDE
-//   to store outlets and actions made in Xcode.
-// If it is removed, they will be lost.
+// This file has been generated automatically by Visual Studio to store outlets and
+// actions made in the UI designer. If it is removed, they will be lost.
 // Manual changes to this file may not be handled correctly.
 //
 using Foundation;
@@ -14,15 +13,14 @@ namespace UI
 	partial class ViewController
 	{
 		[Outlet]
-		AppKit.NSTableView _stationTableView { get; set; }
-
+		AppKit.NSOutlineView _favoriteOutlineView { get; set; }
+		
 		void ReleaseDesignerOutlets ()
 		{
-			if (_stationTableView != null) {
-				_stationTableView.Dispose ();
-				_stationTableView = null;
+			if (_favoriteOutlineView != null) {
+				_favoriteOutlineView.Dispose ();
+				_favoriteOutlineView = null;
 			}
-
 		}
 	}
 }
