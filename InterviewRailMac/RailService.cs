@@ -47,6 +47,7 @@ namespace UI
             public string StationCode { get; set; }
             [XmlElement(ElementName="StationId", Namespace="http://api.irishrail.ie/realtime/")]
             public string StationId { get; set; }
+            public bool IsFavorite { get; set; }
         }
         
         [XmlRoot(ElementName="ArrayOfObjStation", Namespace="http://api.irishrail.ie/realtime/")]
@@ -65,6 +66,10 @@ namespace UI
         {
 
         }
-    }
 
+        public class FavoriteStation
+        {
+           public string StationCode { get; set; }
+        }
+    }
 }
