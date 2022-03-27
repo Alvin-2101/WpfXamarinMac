@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using System.Xml.Serialization;
 using Flurl;
 using Flurl.Http.Xml;
+using Foundation;
 using UI.Model;
 
 namespace UI
@@ -22,7 +23,8 @@ namespace UI
         public async Task<IList<StationData>> GetStationDetailsAsync(string stationCode)
         {
             return (await ApiRoot
-                .AppendPathSegment("getStationDataByCodeXML?StationCode="+ stationCode)
+                .AppendPathSegment("getStationDataByCodeXML")
+                .SetQueryParam("StationCode", stationCode)
                 .GetXmlAsync<ArrayOfStationData>()).ObjStationData;
         }
     }
@@ -36,7 +38,7 @@ namespace UI
     namespace Model
     {
         [XmlRoot(ElementName="objStation", Namespace="http://api.irishrail.ie/realtime/")]
-        public class StationModel 
+        public class StationModel : NSObject
         {
             [XmlElement(ElementName="StationDesc", Namespace="http://api.irishrail.ie/realtime/")]
             public string StationDesc { get; set; }
@@ -66,7 +68,7 @@ namespace UI
         }
 
         [XmlRoot(ElementName = "objStationData")]
-        public class StationData
+        public class StationData : NSObject
         {
             [XmlElement(ElementName = "Servertime")]
             public string Servertime { get; set; }
@@ -125,9 +127,13 @@ namespace UI
             public string Xmlns { get; set; }
         }
 
-        public class FavoriteStation
+        public class FavoriteStation : NSObject
         {
            public string StationCode { get; set; }
+
+           public string Stationfullname { get; set; }
+
+           public List<StationData> StationData { get; set; }
         }
     }
 }

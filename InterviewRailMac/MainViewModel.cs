@@ -48,6 +48,7 @@ namespace UI
                         .ObserveOn(RxApp.MainThreadScheduler)
                         .Subscribe(stations =>
                         {
+                            _consentSourceList.Clear();
                             _consentSourceList.AddRange(stations);
                         });
         }

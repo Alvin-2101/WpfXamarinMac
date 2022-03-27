@@ -14,12 +14,36 @@ namespace UI
 	{
 		[Outlet]
 		AppKit.NSOutlineView _favoriteOutlineView { get; set; }
+
+		[Outlet]
+		AppKit.NSTableColumn DestinationColumn { get; set; }
+
+		[Outlet]
+		AppKit.NSTableColumn EstimatedArrivalTimeColumn { get; set; }
+
+		[Outlet]
+		AppKit.NSTableColumn StationNameColumn { get; set; }
 		
 		void ReleaseDesignerOutlets ()
 		{
 			if (_favoriteOutlineView != null) {
 				_favoriteOutlineView.Dispose ();
 				_favoriteOutlineView = null;
+			}
+
+			if (StationNameColumn != null) {
+				StationNameColumn.Dispose ();
+				StationNameColumn = null;
+			}
+
+			if (DestinationColumn != null) {
+				DestinationColumn.Dispose ();
+				DestinationColumn = null;
+			}
+
+			if (EstimatedArrivalTimeColumn != null) {
+				EstimatedArrivalTimeColumn.Dispose ();
+				EstimatedArrivalTimeColumn = null;
 			}
 		}
 	}

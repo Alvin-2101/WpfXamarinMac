@@ -11,95 +11,170 @@ using UI.Model;
 using System.Collections.ObjectModel;
 using DynamicData.Binding;
 using System.Reactive.Disposables;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace UI
 {
-    public partial class StationDataTableViewDataSource : NSTableViewSource
+    public partial class FavoriteOutlineDelegate : NSOutlineViewDelegate
     {
+        #region Constants
         private const string StationNameCell = @"StationNameCell";
-        private const string StationCodeCell = @"NextTrainCell";
-        
-        private readonly ReadOnlyObservableCollection<StationData> _stations;
+        private const string DestinationCell = @"DestinationCell";
+        private const string EstimatedArrivalTimeCell = @"EstimatedArrivalTimeCell";
+        #endregion
 
-        public StationDataTableViewDataSource(ReadOnlyObservableCollection<StationData> stations, NSTableView tableView)
+        #region Private Variables
+        private FavoriteOutlineViewDataSource DataSource;
+        #endregion
+
+        #region Constructors
+        public FavoriteOutlineDelegate(FavoriteOutlineViewDataSource datasource)
         {
-            _stations = stations;
-            _stations
-                .ToObservableChangeSet()
-                .Subscribe(_ => tableView.ReloadData());
+            this.DataSource = datasource;
         }
+        #endregion
 
-        public override NSView GetViewForItem(NSTableView tableView, NSTableColumn tableColumn, nint row)
+        #region Override Methods
+        public override NSView GetView(NSOutlineView outlineView, NSTableColumn tableColumn, NSObject item)
         {
-            var cell = string.Empty;
-            var text = string.Empty;
-            NSTableCellView cellView;
+            // This pattern allows you reuse existing views when they are no-longer in use.
+            // If the returned view is null, you instance up a new view
+            // If a non-null view is returned, you modify it enough to reflect the new data
+            NSTextField view = null;
+
+
+            // Setup view based on the column selected
             switch (tableColumn.Identifier)
             {
-                //case "StationNameColumn":
-                //    cell = StationNameCell;
-                //    text = _stations[(int)row].StationDesc;
-                //    var makeViewName = (NSTableCellView)tableView.MakeView(cell, this);
-                //    makeViewName.TextField.StringValue = text;
-                //    cellView = makeViewName;
-                //    break;
-                //case "NextTrainColumn":
-                //    cell = StationCodeCell;
-                //    text = _stations[(int)row].StationCode;
-                //    var makeViewCode = (NSTableCellView)tableView.MakeView(cell, this);
-                //    makeViewCode.TextField.StringValue = text;
-                //    cellView = makeViewCode;
-                //    break;
-                //case "FavoriteColumn":
-                //    var view = new NSTableCellView();
+                case "StationNameColumn":
+                     view = (NSTextField)outlineView.MakeView(StationNameCell, this);
+                    if (view == null)
+                    {
+                        view = new NSTextField();
+                        view.Identifier = StationNameCell;
+                        view.BackgroundColor = NSColor.Clear;
+                        view.Bordered = false;
+                        view.Selectable = false;
+                        view.Editable = false;
+                    }
 
-                //    // Configure the view
-                //    view.Identifier = tableColumn.Title;
+                    // Cast item
+                    var stationModelStationDesc = item as FavoriteStation;
+                    var Stationfullname = stationModelStationDesc?.Stationfullname;
+                    view.StringValue = Stationfullname == null ? ((StationData)item).Traincode : Stationfullname;
+                    break;
+                case "DestinationColumn":
+                     view = (NSTextField)outlineView.MakeView(DestinationCell, this);
+                    if (view == null)
+                    {
+                        view = new NSTextField();
+                        view.Identifier = StationNameCell;
+                        view.BackgroundColor = NSColor.Clear;
+                        view.Bordered = false;
+                        view.Selectable = false;
+                        view.Editable = false;
+                    }
 
-                //    var checkbox = new NSButton(new CGRect(0, 0, 20, 20));
-                //    checkbox.SetButtonType(NSButtonType.Switch);
-                //    checkbox.Title = string.Empty;
-                //    checkbox.Tag = row;
-                //    var favArray = NSUserDefaults.StandardUserDefaults.StringArrayForKey("favoriteList");
-                //    if (favArray != null)
-                //        checkbox.State = favArray.Contains(_stations[(int)row].StationCode) ? NSCellStateValue.On : NSCellStateValue.Off;
-                //    else
-                //        checkbox.State = NSCellStateValue.Off;
+                    // Cast item
+                    var stationDataDestination = item as StationData;
+                    var Destination = stationDataDestination?.Destination;
+                    view.StringValue = Destination == null ? string.Empty : Destination;
+                    break;
+                case "EstimatedArrivalTimeColumn":
+                     view = (NSTextField)outlineView.MakeView(EstimatedArrivalTimeCell, this);
+                    if (view == null)
+                    {
+                        view = new NSTextField();
+                        view.Identifier = StationNameCell;
+                        view.BackgroundColor = NSColor.Clear;
+                        view.Bordered = false;
+                        view.Selectable = false;
+                        view.Editable = false;
+                    }
 
-                //    // Wireup events
-                //    checkbox.Activated += (sender, e) =>
-                //    {
-                //        // Get button and product
-                //        var btn = sender as NSButton;
-
-                //        var defaults = NSUserDefaults.StandardUserDefaults;
-                //        var favoriteArray = defaults.StringArrayForKey("favoriteList");
-                //        favoriteList = new List<string>();
-                //        if (favoriteArray != null)
-                //            favoriteList = favoriteArray.ToList();
-
-                //        if (btn.State == NSCellStateValue.On)
-                //            favoriteList.Add(_stations[(int)row].StationCode);
-                //        else
-                //            favoriteList.Remove(_stations[(int)row].StationCode);
-
-                //        defaults.SetValueForKey(NSArray.FromStrings(favoriteList.ToArray()), new NSString("favoriteList"));
-                //        defaults.Synchronize();
-                //    };
-                //    view.AddSubview(checkbox);
-                //    cellView = view;
-                //    break;
-                default:
-                    cellView = null;
+                    // Cast item
+                    var stationDataExparrival = item as StationData;
+                    var Exparrival = stationDataExparrival?.Exparrival;
+                    view.StringValue = Exparrival == null ? string.Empty : Exparrival;
                     break;
             }
 
-            return cellView;
+            return view;
         }
 
-        public override nint GetRowCount(NSTableView tableView)
+        public override bool ShouldSelectItem(NSOutlineView outlineView, NSObject item)
         {
-            return _stations.Count;
+            var favoriteStation = item as FavoriteStation;
+            // Don't select product groups
+            return favoriteStation != null ? favoriteStation.StationData.Count > 0 ? true : false : false;
+        }
+        #endregion
+    }
+
+    public partial class FavoriteOutlineViewDataSource : NSOutlineViewDataSource
+    {
+        private readonly ReadOnlyObservableCollection<FavoriteStation> _stationData;
+
+        public FavoriteOutlineViewDataSource(ReadOnlyObservableCollection<FavoriteStation> stationData, NSOutlineView outlineView)
+        {
+            _stationData = stationData;
+            _stationData
+                .ToObservableChangeSet()
+                .Subscribe(_ => outlineView.ReloadData());
+        }
+        public override nint GetChildrenCount(NSOutlineView outlineView, NSObject item)
+        {
+            if (item == null)
+            {
+                return _stationData.Count;
+            }
+            else
+            {
+                var favoriteStation = item as FavoriteStation;
+                if (favoriteStation != null)
+                    return ((FavoriteStation)item).StationData.Count; //FavoriteStation
+                else
+                    return 1; //StationData
+            }
+        }
+
+        public override NSObject GetChild(NSOutlineView outlineView, nint childIndex, NSObject item)
+        {
+            if (item == null)
+            {
+                return _stationData[(int)childIndex];
+            }
+            else
+            {
+                var favoriteStation = item as FavoriteStation;
+                if (favoriteStation != null)
+                    return favoriteStation.StationData[(int)childIndex];
+                else
+                    return (StationData)item;
+            }
+
+        }
+
+        public override bool ItemExpandable(NSOutlineView outlineView, NSObject item)
+        {
+            //if (item == null)
+            //{
+            //    return _stationData.Count() > 0 ? true : false;
+            //}
+            //else
+            //{
+            //    try
+            //    {
+            //        return ((FavoriteStation)item).StationData.Count() > 0 ? true : false;
+            //    }
+            //    catch (Exception ex)
+            //    {
+            //        return false;
+            //    }
+            //}
+            var favoriteStation = item as FavoriteStation;
+            return favoriteStation != null ? favoriteStation.StationData.Count > 0 ? true : false : false;
         }
 
     }
@@ -120,7 +195,8 @@ namespace UI
 
         private void PopulateFromViewModel(ViewModel viewModel)
         {
-            //_favoriteOutlineView.Source = new StationTableViewDataSource(viewModel.Stations, _stationTableView);
+            _favoriteOutlineView.DataSource = new FavoriteOutlineViewDataSource(viewModel.StationData, _favoriteOutlineView);
+            _favoriteOutlineView.Delegate = new FavoriteOutlineDelegate((FavoriteOutlineViewDataSource)_favoriteOutlineView.DataSource);
         }
     }
 }

@@ -249,14 +249,15 @@
                                     <rect key="frame" x="1" y="1" width="483" height="268"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
-                                        <outlineView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" multipleSelection="NO" autosaveColumns="NO" rowHeight="24" rowSizeStyle="automatic" headerView="clP-M0-0Uk" viewBased="YES" indentationPerLevel="13" outlineTableColumn="XQu-sn-f7K" id="jyq-sF-qyl" userLabel="FavoriteOutlineView">
+                                        <outlineView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" columnReordering="NO" multipleSelection="NO" emptySelection="NO" autosaveColumns="NO" typeSelect="NO" rowHeight="24" rowSizeStyle="automatic" headerView="clP-M0-0Uk" viewBased="YES" indentationPerLevel="13" outlineTableColumn="XQu-sn-f7K" id="jyq-sF-qyl" userLabel="FavoriteOutlineView">
                                             <rect key="frame" x="0.0" y="0.0" width="484" height="240"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <size key="intercellSpacing" width="17" height="0.0"/>
                                             <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                            <tableViewGridLines key="gridStyleMask" vertical="YES"/>
                                             <color key="gridColor" name="gridColor" catalog="System" colorSpace="catalog"/>
                                             <tableColumns>
-                                                <tableColumn width="116" minWidth="40" maxWidth="1000" id="XQu-sn-f7K" userLabel="StationNameColumn">
+                                                <tableColumn identifier="StationNameColumn" width="116" minWidth="40" maxWidth="1000" id="XQu-sn-f7K" userLabel="StationNameColumn">
                                                     <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" title="Station Name">
                                                         <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                                         <color key="backgroundColor" name="headerColor" catalog="System" colorSpace="catalog"/>
@@ -288,7 +289,7 @@
                                                         </tableCellView>
                                                     </prototypeCellViews>
                                                 </tableColumn>
-                                                <tableColumn width="166" minWidth="40" maxWidth="1000" id="kgf-Mc-8Oo" userLabel="DestinationColumn">
+                                                <tableColumn identifier="DestinationColumn" width="166" minWidth="40" maxWidth="1000" id="kgf-Mc-8Oo" userLabel="DestinationColumn">
                                                     <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" title="Destination">
                                                         <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                                         <color key="backgroundColor" name="headerColor" catalog="System" colorSpace="catalog"/>
@@ -320,7 +321,7 @@
                                                         </tableCellView>
                                                     </prototypeCellViews>
                                                 </tableColumn>
-                                                <tableColumn width="156" minWidth="10" maxWidth="3.4028234663852886e+38" id="Rxz-tz-mMi" userLabel="EstimatedArrivalTimeColumn">
+                                                <tableColumn identifier="EstimatedArrivalTimeColumn" width="156" minWidth="10" maxWidth="3.4028234663852886e+38" id="Rxz-tz-mMi" userLabel="EstimatedArrivalTimeColumn">
                                                     <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left" title="Estimated arrival time">
                                                         <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -378,6 +379,9 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="DestinationColumn" destination="kgf-Mc-8Oo" id="jGA-oL-dTS"/>
+                        <outlet property="EstimatedArrivalTimeColumn" destination="Rxz-tz-mMi" id="q3N-3r-n9n"/>
+                        <outlet property="StationNameColumn" destination="XQu-sn-f7K" id="Xhd-MP-b8M"/>
                         <outlet property="_favoriteOutlineView" destination="jyq-sF-qyl" id="L31-BF-RbE"/>
                     </connections>
                 </viewController>
