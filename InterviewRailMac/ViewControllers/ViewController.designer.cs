@@ -7,7 +7,7 @@
 using Foundation;
 using System.CodeDom.Compiler;
 
-namespace UI
+namespace UI.ViewControllers
 {
 	[Register ("ViewController")]
 	partial class ViewController

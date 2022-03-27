@@ -3,8 +3,9 @@
 using Foundation;
 using AppKit;
 using UI.Model;
+using UI.ViewDataSources;
 
-namespace UI
+namespace UI.ViewDelegates
 {
     public partial class FavoriteOutlineDelegate : NSOutlineViewDelegate
     {

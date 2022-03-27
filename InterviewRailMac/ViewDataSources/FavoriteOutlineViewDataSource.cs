@@ -9,7 +9,7 @@ using UI.Model;
 using System.Collections.ObjectModel;
 using DynamicData.Binding;
 
-namespace UI
+namespace UI.ViewDataSources
 {
     public partial class FavoriteOutlineViewDataSource : NSOutlineViewDataSource
     {

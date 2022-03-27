@@ -6,8 +6,9 @@ using ReactiveUI;
 using DynamicData;
 using UI.Model;
 using UI.Utils;
+using UI.Services;
 
-namespace UI
+namespace UI.ViewModels
 {
     public class MainViewModel : ViewModelBase
     {

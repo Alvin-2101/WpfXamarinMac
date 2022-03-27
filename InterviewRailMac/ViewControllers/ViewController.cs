@@ -6,8 +6,11 @@ using ReactiveUI;
 using System.Reactive.Linq;
 using System.Reactive.Disposables;
 using System.Linq;
+using UI.ViewDataSources;
+using UI.ViewDelegates;
+using UI.ViewModels;
 
-namespace UI
+namespace UI.ViewControllers
 {
     public partial class ViewController : ViewControllerBase<ViewModel>
 	{

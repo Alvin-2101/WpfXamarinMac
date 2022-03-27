@@ -108,6 +108,12 @@
     <Compile Include="ViewDataSources\StationTableViewDataSource.cs" />
     <Compile Include="ViewDataSources\FavoriteOutlineViewDataSource.cs" />
     <Compile Include="ViewDelegates\FavoriteOutlineDelegate.cs" />
+    <Compile Include="Models\ArrayOfStationData.cs" />
+    <Compile Include="Models\ArrayOfStationModel.cs" />
+    <Compile Include="Models\FavoriteStation.cs" />
+    <Compile Include="Models\StationData.cs" />
+    <Compile Include="Models\StationModel.cs" />
+    <Compile Include="Services\IRailService.cs" />
   </ItemGroup>
   <ItemGroup>
     <InterfaceDefinition Include="Main.storyboard" />
@@ -118,6 +124,7 @@
     <Folder Include="Services\" />
     <Folder Include="ViewDataSources\" />
     <Folder Include="ViewDelegates\" />
+    <Folder Include="Models\" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Mac\Xamarin.Mac.CSharp.targets" />
 </Project>

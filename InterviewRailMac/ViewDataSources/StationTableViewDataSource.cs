@@ -10,7 +10,7 @@ using Foundation;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace UI
+namespace UI.ViewDataSources
 {
     public class StationTableViewDataSource : DynamicReactiveTableDataSource<StationModel>
     {

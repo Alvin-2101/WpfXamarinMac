@@ -8,9 +8,10 @@ using DynamicData;
 using Foundation;
 using ReactiveUI;
 using UI.Model;
+using UI.Services;
 using UI.Utils;
 
-namespace UI
+namespace UI.ViewModels
 {
     public class ViewModel : ViewModelBase
     {

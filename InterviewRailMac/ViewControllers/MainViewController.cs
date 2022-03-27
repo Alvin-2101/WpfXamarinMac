@@ -4,10 +4,11 @@ using System.Reactive.Linq;
 using ReactiveUI;
 using UI.Utils;
 using System.Linq;
+using UI.ViewDataSources;
+using UI.ViewModels;
 
-namespace UI
+namespace UI.ViewControllers
 {
-
     public partial class MainViewController : ViewControllerBase<MainViewModel>
     {
         public MainViewController(IntPtr handle) : base(handle)
