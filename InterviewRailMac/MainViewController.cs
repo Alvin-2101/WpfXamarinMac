@@ -85,6 +85,7 @@ namespace UI
 
                         defaults.SetValueForKey(NSArray.FromStrings(favoriteList.ToArray()), new NSString("favoriteList"));
                         defaults.Synchronize();
+                        ViewModelBase.Activated?.Invoke();
                     };
                     view.AddSubview(checkbox);
                     cellView = view;

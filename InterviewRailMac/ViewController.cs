@@ -11,7 +11,6 @@ using UI.Model;
 using System.Collections.ObjectModel;
 using DynamicData.Binding;
 using System.Reactive.Disposables;
-using System.Collections.Generic;
 using System.Linq;
 
 namespace UI
@@ -38,11 +37,7 @@ namespace UI
         #region Override Methods
         public override NSView GetView(NSOutlineView outlineView, NSTableColumn tableColumn, NSObject item)
         {
-            // This pattern allows you reuse existing views when they are no-longer in use.
-            // If the returned view is null, you instance up a new view
-            // If a non-null view is returned, you modify it enough to reflect the new data
             NSTextField view = null;
-
 
             // Setup view based on the column selected
             switch (tableColumn.Identifier)
@@ -106,7 +101,6 @@ namespace UI
         public override bool ShouldSelectItem(NSOutlineView outlineView, NSObject item)
         {
             var favoriteStation = item as FavoriteStation;
-            // Don't select product groups
             return favoriteStation != null ? favoriteStation.StationData.Count > 0 ? true : false : false;
         }
         #endregion
@@ -153,26 +147,10 @@ namespace UI
                 else
                     return (StationData)item;
             }
-
         }
 
         public override bool ItemExpandable(NSOutlineView outlineView, NSObject item)
         {
-            //if (item == null)
-            //{
-            //    return _stationData.Count() > 0 ? true : false;
-            //}
-            //else
-            //{
-            //    try
-            //    {
-            //        return ((FavoriteStation)item).StationData.Count() > 0 ? true : false;
-            //    }
-            //    catch (Exception ex)
-            //    {
-            //        return false;
-            //    }
-            //}
             var favoriteStation = item as FavoriteStation;
             return favoriteStation != null ? favoriteStation.StationData.Count > 0 ? true : false : false;
         }

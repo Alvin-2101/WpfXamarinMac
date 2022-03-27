@@ -38,11 +38,12 @@ namespace UI
                {
                    GetStationDetails();
                });
+            Activated = GetStationDetails;
         }
 
         protected override void HandleDeactivation()
         {
-            
+
         }
 
         private void GetStationDetails()
@@ -54,12 +55,10 @@ namespace UI
                         .Subscribe(stations =>
                         {
                             stationModelList.AddRange(stations);
-                            List<StationModel> stationModels = new List<StationModel>();
+
                             _consentStationDataSourceList.Clear();
                             foreach (var stationCode in NSUserDefaults.StandardUserDefaults.StringArrayForKey("favoriteList"))
                             {
-                                stationModels.Add(stationModelList.FindAll(a => a.StationCode == stationCode));
-
                                 Observable.FromAsync(() => _railService.GetStationDetailsAsync(stationCode))
                                                .Take(1)
                                                .ObserveOn(RxApp.MainThreadScheduler)
