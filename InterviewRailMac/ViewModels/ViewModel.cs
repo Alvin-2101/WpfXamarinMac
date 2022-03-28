@@ -10,6 +10,7 @@ using ReactiveUI;
 using UI.Model;
 using UI.Services;
 using UI.Utils;
+using UI.ViewDataSources;
 
 namespace UI.ViewModels
 {
@@ -39,7 +40,7 @@ namespace UI.ViewModels
                {
                    GetStationDetails();
                });
-            Activated = GetStationDetails;
+            StationTableViewDataSource.CheckboxActivated = GetStationDetails;
         }
 
         protected override void HandleDeactivation()

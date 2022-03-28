@@ -18,7 +18,7 @@ namespace UI.ViewDataSources
         private const string StationCodeCell = @"StationCodeCell";
         private List<string> favoriteList;
         private readonly ReadOnlyObservableCollection<StationModel> _stations;
-
+        public static Action CheckboxActivated;
         public StationTableViewDataSource(NSTableView tableView, ReadOnlyObservableCollection<StationModel> stations): base(tableView, stations)
         {
             _stations = stations;
@@ -88,7 +88,7 @@ namespace UI.ViewDataSources
 
                         defaults.SetValueForKey(NSArray.FromStrings(favoriteList.ToArray()), new NSString("favoriteList"));
                         defaults.Synchronize();
-                        ViewModelBase.Activated?.Invoke();
+                        CheckboxActivated?.Invoke();
                     };
                     view.AddSubview(checkbox);
                     cellView = view;

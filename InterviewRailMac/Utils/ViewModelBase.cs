@@ -26,7 +26,5 @@ namespace UI.Utils
         protected abstract void HandleDeactivation();
 
         public ViewModelActivator Activator { get; }
-
-        public static Action Activated;
     }
 }
